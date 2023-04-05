@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block body %}
+
+  <div class="row">
+    <div class="col-md-5">
+      {% with messages = get_flashed_messages()  %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <div class="card card-body">
+        <form action="{{url_for('employees.add_employee')}}" method="POST">
+          <div class="form-group">
+            <input type="text" class="form-control" name="fullname" placeholder="FullName">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="phone" placeholder="Phone">
+          </div>
+          <button class="btn btn-primary btn-block">
+            Save 
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-7">
+        {% if employees %}
+      <table class="table table-striped table-hover table-bordered table-sm bg-white">
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>fullname</td>
+            <td>email</td>
+            <td>phone</td>
+            <td>Operations</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for employee in employees %}
+          <tr>
+            <td>{{employee.id}}</td>
+            <td>{{employee.fullname}}</td>
+            <td>{{employee.email}}</td>
+            <td>{{employee.phone}}</td>
+            <td>
+              <a href="/edit/{{employee.id}}" class="btn btn-secondary">edit</a>
+              <a href="/delete/{{employee.id}}" class="btn btn-danger btn-delete">delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <h2>No records of Employees!</h2>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
