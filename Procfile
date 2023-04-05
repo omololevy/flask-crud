@@ -1,1 +1,1 @@
-web: gunicorn asrc/manage:app
+web: gunicorn src/manage:app
